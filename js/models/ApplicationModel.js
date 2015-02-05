@@ -6,7 +6,7 @@ BaseModel = Backbone.Model.extend({
 	enableAntiFlood: true,
 
 	/**
-	 * TODO
+	 * Return the 'division' of the the current date and 1000
 	 * 
 	 * @return{number}
 	 * @memberof BaseModel
@@ -36,7 +36,7 @@ BaseModel = Backbone.Model.extend({
 	},
 	
 	/**
-	 * TODO
+	 * Serialize requests
 	 * 
  	 * @param {Object} method
 	 * @param {Object} params
@@ -54,7 +54,8 @@ BaseModel = Backbone.Model.extend({
 	},
 	
 	/**
-	 * TODO
+	 * If the request is not the same fetch the data
+	 * else return null
 	 * 
  	 * @param {Object} options
 	 * @memberof BaseModel
@@ -72,7 +73,8 @@ BaseModel = Backbone.Model.extend({
 	},
 	
 	/**
-	 * TODO
+	 * If the request is not the same save the data
+	 * else return null
 	 *  
 	 * @param {Object} key
 	 * @param {Object} val
@@ -92,8 +94,8 @@ BaseModel = Backbone.Model.extend({
 	},
 	
 	/**
-	 * TODO
-	 * 
+	 * Abstract method
+	 * Called before http-request
 	 * @param {Object} key
 	 * @param {Object} val
 	 * @param {Object} options
@@ -112,8 +114,8 @@ BaseModel = Backbone.Model.extend({
 	},
 	
 	/**
-	 * TODO
-	 *  
+	 * Abstract method
+	 * Called if http-request is skipped
 	 * @param {Object} key
 	 * @param {Object} val
 	 * @param {Object} options

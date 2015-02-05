@@ -1,11 +1,9 @@
 /**
 * Send a POST-request to the server to save a registration
-* 
 * @param {Object} model
 * @param {JSON} inputRegister 
 */
 function userRegisterController(model, inputRegister) {
-
 	model.save(inputRegister, {
 		
 		/*
@@ -42,8 +40,8 @@ function userRegisterController(model, inputRegister) {
 * Send a GET-request to the server to logout a user
 */
 function userLogoutController() {
-	
 	var model = new UserLogout();
+	
 	model.fetch({
 		
 		/*
@@ -67,12 +65,10 @@ function userLogoutController() {
 
 /**
 * Send a POST-request to the server to login a user
-* 
 * @param {Object} model
 * @param {JSON} inputLogin 
 */
 function userLoginController(model, inputLogin) {
-	
 	model.save(inputLogin, {
 		
 		/*
@@ -117,12 +113,10 @@ function userLoginController(model, inputLogin) {
 
 /**
 * Send a POST-request to the server to login a user
-* 
 * @param {Object} model
 * @param {JSON} inputChangeGeneral 
 */
 function userChangeGeneralController(model, inputChangeGeneral) {
-	
 	model.save(inputChangeGeneral, {
 		
 		/*
@@ -163,12 +157,10 @@ function userChangeGeneralController(model, inputChangeGeneral) {
 
 /**
 * Send a POST-request to the server to login a user
-* 
 * @param {Object} model
 * @param {JSON} inputChangePassword 
 */
 function userChangePasswordController(model, inputChangePassword) {
-	
 	model.save(inputChangePassword, {
 		
 		/*
@@ -217,11 +209,10 @@ function registeredUserChangedLanguage() {
  * @param {String} key
  */
 function userCheckDataController(idInput, idForm, key) {
-	
 	var inputCheckData = {};
 	inputCheckData[key] = $("#" + idInput).val();
-	
 	var model = new UserCheckData();
+	
 	model.save(inputCheckData, {
 		
 		/*

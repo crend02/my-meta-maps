@@ -125,7 +125,7 @@ class Microformats2 extends CachedParser {
 						$model->setCopyright(current($value));
 						break;
 					case 'tag':
-						$model->setKeywords(current($value));
+						$model->setKeywords($value);
 						break;
 					case 'contents':
 						$model->setAbstract(current($value));

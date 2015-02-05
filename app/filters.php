@@ -53,6 +53,7 @@ App::before(function($request)
 	}
 	
 	// Set up GeoMetadata
+//	GmRegistry::registerService(new \GeoMetadata\Service\WorldFileJpeg());
 	GmRegistry::registerService(new \GeoMetadata\Service\Kml());
 	GmRegistry::registerService(new \GeoMetadata\Service\Microformats2());
 	GmRegistry::registerService(new \GeoMetadata\Service\OgcCatalogueService());

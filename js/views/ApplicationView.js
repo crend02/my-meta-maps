@@ -13,7 +13,6 @@ ContentView = Backbone.View.extend({
 	/**
 	 * Constructor of this view
 	 * Call function configure()
-	 * 
 	 * @param {Object} options
 	 * @memberof ContentView
 	 */
@@ -23,9 +22,8 @@ ContentView = Backbone.View.extend({
 	},
 	
 	/**
-	 * TODO
-	 * 
-	 *  @param {Object} options
+	 * Configure what happens in the constructor
+	 * @param {Object} options
 	 * @memberof ContentView
 	 */
 	configure: function (options) {
@@ -113,8 +111,9 @@ ContentView = Backbone.View.extend({
 	},
 	
 	/**
-	 * TODO
-	 * Call methods stopListening(), undelegateEvents() and unbind() from ...
+	 * Remove callbacks, events, listeners, etc.
+	 * 
+	 * Call methods stopListening(), undelegateEvents() and unbind()
 	 * @memberof ContentView
 	 */
 	close: function () {
@@ -199,7 +198,8 @@ ModalView = ContentView.extend({
 	},
 	
 	/**
-	 * TODO 
+	 * Show a modal for progress from helpers.js 
+	 * 
 	 * @memberof ModalView
 	 */
 	showProgress: function () {
@@ -216,6 +216,8 @@ MapView = ContentView.extend({
 	// OpenLayers/Map
 	map: null,
 	polyLayer: null,
+	externalHover: null,
+	selectMouseMove: null,
 	mapSearchExecuted: true,
 	// Default options for filters
 	options: {
@@ -233,7 +235,6 @@ MapView = ContentView.extend({
 	
 	/**
 	 * Initialize main-map
-	 *  
 	 * @override
 	 * @memberof MapView
 	 */
@@ -256,25 +257,37 @@ MapView = ContentView.extend({
 			controls: Mapping.getControls(),
 			view: view
 		});
-		
-		//highlight geometry on mousemouve
-		var selectMouseMove = new ol.interaction.Select({
+
+		// Hovering the links of the geodata should lead to a highlighted bbox
+		this.externalHover = new ol.interaction.Select();
+		this.map.addInteraction(this.externalHover);
+		// highlight geometry on mousemouve
+		this.selectMouseMove = new ol.interaction.Select({
 			condition: ol.events.condition.mouseMove
 		});
-		this.map.addInteraction(selectMouseMove);
+		this.selectMouseMove.getFeatures().on('change:length', function (e) {
+			if (e.target.getArray().length === 0) {
+				//no features selected
+				$('.geodata-highlighter').removeClass('geodata-highlighter');
+			} else {
+				// highlight the comments
+				$('#GeodataLink'+e.target.item(0).getId()).addClass('geodata-highlighter');
+			}
+		});
+		this.map.addInteraction(this.selectMouseMove);
 		// select geometry on mouseclick and open CommentView
 		var select = new ol.interaction.Select({
 			style: Mapping.getBBoxStyle(true)
 		});
-		this.map.addInteraction(select);
-		select.getFeatures().on('change:length', function(e) {
+		select.getFeatures().on('change:length', function (e) {
 			if (e.target.getArray().length === 0) {
-			//no features selected
+				//no features selected
 			} else {
-			//open CommentView of the feature
-			 router.geodata(e.target.item(0).getId());
+				//open CommentView of the feature
+				router.geodata(e.target.item(0).getId());
 			}
 		});
+		this.map.addInteraction(select);
 		
 		// The basic page is now loaded. Now we set the default data depending on the context.
 		if (this.options.searchHash) {
@@ -304,7 +317,6 @@ MapView = ContentView.extend({
 	
 	/**
 	 * Initialize data for the main-map
-	 * 
 	 * @param {Object} params 
 	 * @memberof MapView
 	 */
@@ -375,7 +387,7 @@ MapView = ContentView.extend({
 	},
 	
 	/**
-	 * TODO 
+	 * Call method executeSearch from commentController.js if mapSearchExecuted is not true
 	 * @memberof MapView
 	 */
 	onExtentChanged: function() {
@@ -433,8 +445,7 @@ MapView = ContentView.extend({
 	
 	/**
 	 * Calculates the current bounding box of the map and returns it as an WKt String
-	 * 
-	 * @return TODO
+	 * @return a bounding box
 	 * @memberof MapView
 	 */
 	getBoundingBox: function () {
@@ -449,6 +460,9 @@ MapView = ContentView.extend({
 	 */
 	addGeodataToMap: function (data) {
 		this.polyLayer.getSource().clear();
+		// Clear the selection handler aswell or there will remain a marked bbox
+		this.selectMouseMove.getFeatures().clear();
+		this.externalHover.getFeatures().clear();
 		// gets each bbox(wkt format), transforms it into a geometry and adds it to the vector source 
 		for (var index = 0; index < data.geodata.length; index++) {
 			Mapping.addWktToLayer(this.map, this.polyLayer, data.geodata[index].metadata.bbox, false, data.geodata[index].id);
@@ -457,12 +471,21 @@ MapView = ContentView.extend({
 	
 	/**
 	 * Return the url for the map-template
-	 * 
 	 * @return {String} url for the map-template
 	 * @memberof MapView
 	 */
 	getPageTemplate: function () {
 		return '/api/internal/doc/map';
+	},
+	
+	/**
+	 * Adds an Feature from a selected Comment to the Collection of the ol.interaction
+	 * @param {int} id
+	 * @pa
+	 * @memberof CommentsShowView
+	 */
+	selectFeatureById: function(id){
+		Mapping.selectFeatureById(id, this.polyLayer, this.externalHover);
 	}
 
 });
@@ -476,7 +499,6 @@ AboutView = ContentView.extend({
 	
 	/**
 	 * Return url for the template of the imprint
-	 * 
 	 * @return {String} url for the template of the imprint
 	 * @memberof AboutView
 	 */
@@ -494,7 +516,6 @@ HelpView = ContentView.extend({
 	
 	/**
 	 * Return url for the template of the help-site
-	 * 
 	 * @return {String} url for the template of the help-site
 	 * @memberof HelpView
 	 */

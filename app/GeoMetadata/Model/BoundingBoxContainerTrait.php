@@ -116,7 +116,8 @@ trait BoundingBoxContainerTrait {
 	 * @return \GeoMetadata\Model\BoundingBox
 	 */
 	public function createBoundingBox($west, $south, $east, $north, $crs = '') {
-		$bbox = $this->deliverBoundingBox()->set($west, $south, $east, $north);
+		$bbox = $this->deliverBoundingBox();
+		$bbox->set($west, $south, $east, $north);
 		$bbox->setCoordinateReferenceSystem($crs);
 		$this->addBoundingBox($bbox);
 		return $bbox;

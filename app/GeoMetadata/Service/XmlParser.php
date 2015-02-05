@@ -37,7 +37,21 @@ abstract class XmlParser extends CachedParser {
 	 * @return SimpleXMLElement $source Internal parser instance
 	 */
 	protected function createParser($source) {
-		return simplexml_load_string($source);
+		libxml_use_internal_errors(true); // Ignore error messages during parsing
+		$node = simplexml_load_string($source);
+		libxml_use_internal_errors(false);
+
+		if (empty($node)) {
+			$errors = libxml_get_errors();
+			foreach ($errors as $error) {
+				GmRegistry::log($error);
+			}
+			libxml_clear_errors();
+			return null;
+		}
+		else {
+			return $node;
+		}
 	}
 
 	/**

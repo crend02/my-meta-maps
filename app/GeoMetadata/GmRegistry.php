@@ -150,7 +150,7 @@ class GmRegistry {
 	 * Supported formats (? = placeholder for the number):
 	 * * http://www.opengis.net/def/crs/epsg/0/?
 	 * * epsg:?
-	 * * urn:ogc:def:drc:epsg::?
+	 * * urn:ogc:def:crs:epsg::?
 	 * 
 	 * @param string $code Namespace to parse
 	 * @return int Code number or 0 on failure
@@ -160,7 +160,7 @@ class GmRegistry {
 			'http://www.opengis.net/def/crs/epsg/0/epsg:', // Not a valid urn, but can be found on the web
 			'http://www.opengis.net/def/crs/epsg/0/',
 			'epsg:',
-			'urn:ogc:def:drc:epsg::'
+			'urn:ogc:def:crs:epsg::'
 		);
 		$number = 0;
 		$code = trim($code);

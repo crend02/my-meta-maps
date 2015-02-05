@@ -461,6 +461,27 @@ Mapping = {
 				style: 'default'
 			})
 		});
+	},
+	/**
+	 * Delects any previously selected feature and selects anotehr feature by it's id.
+	 * @param {int} id
+	 * @param {ol.layer.Vector} Layer containing the feature with the given ID
+	 * @param {ol.interaction.Select} Object that handles the interaction stuff
+	 * @memberof Mapping
+	 */
+	selectFeatureById: function(id, layer, selectHandler){
+		var selectedFeature = null; 
+		if (id) {
+			selectedFeature = layer.getSource().getFeatureById(id);
+		}
+		var currentFeature = null;
+		if (selectHandler.getFeatures().getLength() > 0){
+			currentFeature = selectHandler.getFeatures().item(0);
+			selectHandler.getFeatures().clear();
+		}
+		if (selectedFeature && selectedFeature !== currentFeature) {
+			selectHandler.getFeatures().push(selectedFeature);
+		}
 	}
 };
 
@@ -472,7 +493,7 @@ Progress = {
 	
 	/**
 	 * Shows the Progress bar
-	 * @param {int} id
+	 * @param {string} id
 	 * @memberOf Progress
 	 */
 	show: function(id) {
@@ -481,7 +502,7 @@ Progress = {
 	
 	/**
 	 * Hide the progress bar
-	 * @param {int} id
+	 * @param {string} id
 	 * @memberOf Progress
 	 */
 	hide: function(id) {
@@ -490,7 +511,7 @@ Progress = {
 	
 	/**
 	 * start progress bar
-	 * @param {int} id
+	 * @param {string} id
 	 * @memberOf Progress
 	 */
 	start: function(id) {
@@ -500,7 +521,7 @@ Progress = {
 	
 	/**
 	 * stop progress bar
-	 * @param {int} id
+	 * @param {string} id
 	 * @memberOf Progress
 	 */
 	stop: function(id) {

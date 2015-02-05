@@ -7,7 +7,6 @@ RegisterView = ModalView.extend({
 
 	/**
 	 * Return url for the template of the registration
-	 * 
 	 * @return {String} url for the template of the registration
 	 * @memberof RegisterView
 	 */
@@ -48,7 +47,6 @@ LoginView = ModalView.extend({
 
 	/**
 	 * Return url for the template of the login
-	 * 
 	 * @return {String} url for the template of the login
 	 * @memberof LoginView
 	 */
@@ -90,7 +88,6 @@ ProfileView = ModalView.extend({
 	
 	/**
 	 * Return url for the template of the profil of a registred user
-	 * 
 	 * @return {String} url for the template of the profil of a registred user
 	 * @memberof ProfileView
 	 */
@@ -99,8 +96,7 @@ ProfileView = ModalView.extend({
 	},
 	
 	/**
-	 * Sets that this view is not cached.
-	 * 
+	 * Sets that this view is not cached
 	 * @return {boolean} true  
 	 * @memberof ProfileView
 	 */
@@ -142,7 +138,6 @@ PasswordView = ModalView.extend({
 	
 	/**
 	 * Return url for the template of the formular to change the password
-	 * 
 	 * @return {String} url for the template of the formular to change the password
 	 * @memberof PasswordView
 	 */
@@ -157,7 +152,6 @@ PasswordView = ModalView.extend({
 	/**
 	 * Called if a user want to change the password
 	 * Call method userChangePasswordControlle from the file userController.js
-	 * 
 	 * @param {Object} event
 	 * @memberof PasswordView
 	 */
